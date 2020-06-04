@@ -79,35 +79,35 @@ Each User _resource_ should conform to the following structure (AKA schema):
   - respond with HTTP status code `500`.
   - return the following JSON object: `{ errorMessage: "The user information could not be retrieved." }`.
 
-When the client makes a `DELETE` request to `/api/users/:id`:
+[x] When the client makes a `DELETE` request to `/api/users/:id`:
 
-- If the _user_ with the specified `id` is not found:
+- If the _user_ with the specified `id` is not found: [x]
 
   - respond with HTTP status code `404` (Not Found).
   - return the following JSON object: `{ message: "The user with the specified ID does not exist." }`.
 
-- If there's an error in removing the _user_ from the database:
+- If there's an error in removing the _user_ from the database: [x]
   - respond with HTTP status code `500`.
   - return the following JSON object: `{ errorMessage: "The user could not be removed" }`.
 
-When the client makes a `PUT` request to `/api/users/:id`:
+[x] When the client makes a `PUT` request to `/api/users/:id`:
 
-- If the _user_ with the specified `id` is not found:
+- If the _user_ with the specified `id` is not found: [x]
 
   - respond with HTTP status code `404` (Not Found).
   - return the following JSON object: `{ message: "The user with the specified ID does not exist." }`.
 
-- If the request body is missing the `name` or `bio` property:
+- If the request body is missing the `name` or `bio` property: [x]
 
   - respond with HTTP status code `400` (Bad Request).
   - return the following JSON response: `{ errorMessage: "Please provide name and bio for the user." }`.
 
-- If there's an error when updating the _user_:
+- If there's an error when updating the _user_: [x]
 
   - respond with HTTP status code `500`.
   - return the following JSON object: `{ errorMessage: "The user information could not be modified." }`.
 
-- If the user is found and the new information is valid:
+- If the user is found and the new information is valid: [x]
 
   - update the user document in the database using the new information sent in the `request body`.
   - respond with HTTP status code `200` (OK).

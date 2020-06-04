@@ -61,20 +61,29 @@ server.post("/users", (req, res) => {
 
 //UPDATE USER
 server.put("/users/:id", (req, res) => {
+  if (!req.body.name || !req.body.bio) {
+    return res.status(400).json({
+      errorMessage: "Please provide name and bio for the user.",
+    });
+  }
+
   const user = db.getUserById(req.params.id);
 
-  // can't update a user that doesn't exist, so check first
   if (user) {
-    const updatedUser = db.updateUser(user.id, {
-      // we whitelist values here instead of passing req.body directly,
-      // so we know exactly what's allowed to be updated and what's not.
-      name: req.body.name || user.name,
-    });
-
-    res.json(updatedUser);
+    try {
+      const updatedUser = db.updateUser(user.id, {
+        name: req.body.name || user.name,
+        bio: req.body.bio || user.bio,
+      });
+      res.status(200).json(updatedUser);
+    } catch {
+      res.status(404).json({
+        errorMessage: "The user with the specified ID does not exist.",
+      });
+    }
   } else {
-    res.status(404).json({
-      message: "User not found",
+    res.status(500).json({
+      errorMessage: "The user information could not be modified.",
     });
   }
 });
