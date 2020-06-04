@@ -84,13 +84,17 @@ server.delete("/users/:id", (req, res) => {
   const user = db.getUserById(req.params.id);
 
   if (user) {
-    db.deleteUser(user.id);
-    // 204 is just a successful empty response,
-    // since we don't really have anything to return
-    res.status(204).end();
+    try {
+      db.deleteUser(user.id);
+      res.status(204).end();
+    } catch {
+      res.status(500).json({
+        errorMessage: "The user could not be removed",
+      });
+    }
   } else {
     res.status(404).json({
-      message: "User not found",
+      message: "The user with the specified ID does not exist.",
     });
   }
 });
